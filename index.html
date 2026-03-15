@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Danjue Li — Watercolor Artist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blush: #f2ddd5; --blush-deep: #e8c4b8;
+    --sage: #b8c9b0; --sage-light: #d6e4d0;
+    --dust: #a8bcd4; --dust-light: #d0dcea;
+    --cream: #faf7f4; --ink: #3a3530; --ink-soft: #6b635c; --white: #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; font-weight: 300; color: var(--ink); background: var(--cream); line-height: 1.7; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(250,247,244,0.92); backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 300; letter-spacing: 0.08em; color: var(--ink); text-decoration: none; cursor: pointer; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); text-decoration: none; transition: color 0.2s; cursor: pointer; }
+  .nav-links a:hover { color: var(--ink); }
+  .cart-btn { background: none; border: none; cursor: pointer; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s; }
+  .cart-btn:hover { color: var(--ink); }
+  .cart-count { background: var(--blush-deep); color: var(--ink); border-radius: 50%; width: 18px; height: 18px; font-size: 0.65rem; display: flex; align-items: center; justify-content: center; }
+
+  #hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; padding: 6rem 2rem 4rem; }
+  .hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 60% 50% at 20% 30%, rgba(242,221,213,0.7) 0%, transparent 70%), radial-gradient(ellipse 50% 60% at 80% 70%, rgba(168,188,212,0.5) 0%, transparent 65%), radial-gradient(ellipse 40% 40% at 55% 20%, rgba(184,201,176,0.5) 0%, transparent 60%); }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-eyebrow { font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 1.5rem; }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 300; line-height: 1.05; color: var(--ink); margin-bottom: 1.5rem; }
+  .hero-title em { font-style: italic; color: var(--ink-soft); }
+  .hero-sub { font-size: 1rem; color: var(--ink-soft); max-width: 420px; margin: 0 auto 2.5rem; }
+  .btn-primary { display: inline-block; padding: 0.75rem 2.2rem; border: 1px solid var(--ink); color: var(--ink); font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; transition: all 0.25s; cursor: pointer; background: none; font-family: 'Jost', sans-serif; }
+  .btn-primary:hover { background: var(--ink); color: var(--cream); }
+
+  section { padding: 6rem 4rem; }
+  .section-label { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 0.8rem; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; line-height: 1.2; margin-bottom: 2.5rem; }
+
+  #about { background: var(--white); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; max-width: 1000px; margin: 0 auto; }
+  .about-img { width: 100%; aspect-ratio: 3/4; overflow: hidden; }
+  .about-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .about-text p { color: var(--ink-soft); margin-bottom: 1rem; font-size: 0.95rem; }
+
+  #portfolio { background: var(--cream); }
+  .portfolio-header { max-width: 1100px; margin: 0 auto 3rem; }
+  .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1100px; margin: 0 auto; }
+  .portfolio-item { cursor: pointer; }
+  .portfolio-img { width: 100%; aspect-ratio: 4/5; overflow: hidden; position: relative; transition: transform 0.4s ease; }
+  .portfolio-item:hover .portfolio-img { transform: scale(1.02); }
+  .portfolio-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .portfolio-info { padding: 0.9rem 0 0; }
+  .portfolio-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; }
+  .portfolio-medium { font-size: 0.72rem; color: var(--ink-soft); letter-spacing: 0.08em; }
+
+  #shop { background: var(--white); }
+  .shop-header { max-width: 1100px; margin: 0 auto 3rem; }
+  .shop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 1100px; margin: 0 auto; }
+  .shop-card { border: 1px solid rgba(0,0,0,0.06); padding: 1.5rem; transition: box-shadow 0.3s; }
+  .shop-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.07); }
+  .shop-img { width: 100%; aspect-ratio: 1/1; margin-bottom: 1.2rem; position: relative; overflow: hidden; }
+  .shop-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .shop-badge { position: absolute; top: 0.7rem; left: 0.7rem; background: var(--sage-light); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.6rem; color: var(--ink); }
+  .sold-badge { background: var(--blush-deep) !important; }
+  .shop-title { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; margin-bottom: 0.2rem; }
+  .shop-meta { font-size: 0.72rem; color: var(--ink-soft); margin-bottom: 0.8rem; }
+  .shop-bottom { display: flex; justify-content: space-between; align-items: center; }
+  .shop-price { font-size: 1rem; }
+  .add-to-cart { background: none; border: 1px solid var(--ink); padding: 0.4rem 1rem; cursor: pointer; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); transition: all 0.2s; }
+  .add-to-cart:hover { background: var(--ink); color: var(--cream); }
+  .add-to-cart.added { background: var(--sage-light); border-color: var(--sage); }
+
+  #contact { background: var(--cream); }
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 1.2rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group.full { grid-column: 1 / -1; }
+  label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
+  input, textarea { background: var(--white); border: 1px solid rgba(0,0,0,0.12); padding: 0.8rem 1rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.9rem; color: var(--ink); outline: none; transition: border-color 0.2s; resize: none; width: 100%; }
+  input:focus, textarea:focus { border-color: var(--dust); }
+  .btn-submit { width: 100%; padding: 1rem; background: var(--ink); color: var(--cream); border: none; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: opacity 0.2s; margin-top: 0.5rem; }
+  .btn-submit:hover { opacity: 0.8; }
+  .form-success { display: none; text-align: center; padding: 2rem; color: var(--ink-soft); font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-style: italic; }
+  .divider { width: 40px; height: 1px; background: var(--ink-soft); margin: 0 auto 3rem; opacity: 0.3; }
+
+  footer { background: var(--ink); color: rgba(255,255,255,0.5); text-align: center; padding: 2.5rem; font-size: 0.75rem; letter-spacing: 0.1em; }
+  footer span { color: rgba(255,255,255,0.8); }
+
+  .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .cart-overlay.open { opacity: 1; pointer-events: all; }
+  .cart-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 380px; background: var(--cream); z-index: 201; transform: translateX(100%); transition: transform 0.35s ease; display: flex; flex-direction: column; }
+  .cart-drawer.open { transform: translateX(0); }
+  .cart-head { display: flex; justify-content: space-between; align-items: center; padding: 1.8rem 2rem; border-bottom: 1px solid rgba(0,0,0,0.08); }
+  .cart-head h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; }
+  .cart-close { background: none; border: none; cursor: pointer; font-size: 1.4rem; color: var(--ink-soft); }
+  .cart-items { flex: 1; overflow-y: auto; padding: 1.5rem 2rem; }
+  .cart-empty { text-align: center; color: var(--ink-soft); padding: 3rem 0; font-size: 0.9rem; }
+  .cart-item { display: flex; gap: 1rem; align-items: center; padding: 1rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .cart-item-img { width: 60px; height: 60px; flex-shrink: 0; overflow: hidden; }
+  .cart-item-img img { width: 100%; height: 100%; object-fit: cover; }
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; }
+  .cart-item-price { font-size: 0.8rem; color: var(--ink-soft); }
+  .cart-item-remove { background: none; border: none; cursor: pointer; color: var(--ink-soft); font-size: 0.8rem; transition: color 0.2s; }
+  .cart-item-remove:hover { color: var(--ink); }
+  .cart-footer { padding: 1.5rem 2rem; border-top: 1px solid rgba(0,0,0,0.08); }
+  .cart-total { display: flex; justify-content: space-between; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; margin-bottom: 1.2rem; }
+  .btn-checkout { width: 100%; padding: 1rem; background: var(--ink); color: var(--cream); border: none; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: opacity 0.2s; }
+  .btn-checkout:hover { opacity: 0.8; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .portfolio-grid, .shop-grid { grid-template-columns: 1fr; }
+    .cart-drawer { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo" onclick="goTo('hero')">Danjue Li</span>
+  <ul class="nav-links">
+    <li><a onclick="goTo('about')">About</a></li>
+    <li><a onclick="goTo('portfolio')">Portfolio</a></li>
+    <li><a onclick="goTo('shop')">Shop</a></li>
+    <li><a onclick="goTo('contact')">Contact</a></li>
+  </ul>
+  <button class="cart-btn" onclick="toggleCart()">Bag <span class="cart-count" id="cartCount">0</span></button>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Watercolor Artist · Bay Area, CA</p>
+    <h1 class="hero-title">Danjue<br><em>Li</em></h1>
+    <p class="hero-sub">Painting the quiet beauty of light, water, and stillness — one brushstroke at a time.</p>
+    <button class="btn-primary" onclick="goTo('portfolio')">View Portfolio</button>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img">
+      <img src="https://res.cloudinary.com/ddeiqh775/image/upload/v1773535319/ChatGPT_Image_Mar_14_2026_05_39_32_PM_g2lih2.png" alt="Danjue Li">
+    </div>
+    <div class="about-text">
+      <p class="section-label">About the Artist</p>
+      <h2 class="section-title">Drawn to the fleeting, the luminous, the in-between.</h2>
+      <p>From childhood, Danjue Li found in drawing and painting a rare stillness — a quiet focus that the rest of the world couldn't offer. Art was always a dream, though life took her first into software engineering.</p>
+      <p>In recent years, she returned to that dream with full devotion, studying watercolor under the influence of renowned artist Xiaochang Zhang. Her practice has since become an exploration of what she loves most about the medium: light.</p>
+      <p>Based in the Bay Area, Danjue is drawn to the way light transforms ordinary scenes — revealing subtle beauty in the everyday. Through watercolor, she seeks to capture quiet, luminous moments that invite the viewer to slow down and simply observe.</p>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="portfolio-header">
+    <p class="section-label">Selected Works</p>
+    <h2 class="section-title">Portfolio</h2>
+  </div>
+  <div class="portfolio-grid">
+    <div class="portfolio-item">
+      <div class="portfolio-img">
+        <img src="https://res.cloudinary.com/dla5agh4s/image/upload/w_800,q_auto/v1773532323/DSC_9760-5mb_1_tuwadf.jpg" alt="Whisper of the Wind">
+      </div>
+      <div class="portfolio-info">
+        <div class="portfolio-name">Whisper of the Wind</div>
+        <div class="portfolio-medium">Watercolor · 22 × 22 in</div>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <div class="portfolio-img">
+        <img src="https://res.cloudinary.com/dla5agh4s/image/upload/w_800,q_auto/v1773532323/DSC_9760-5mb_1_tuwadf.jpg" alt="Shades of Noon">
+      </div>
+      <div class="portfolio-info">
+        <div class="portfolio-name">Shades of Noon</div>
+        <div class="portfolio-medium">Watercolor on Cold Press · 18 × 24 in</div>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <div class="portfolio-img">
+        <img src="https://res.cloudinary.com/dla5agh4s/image/upload/w_800,q_auto/v1773532323/DSC_9760-5mb_1_tuwadf.jpg" alt="Between Stone and Silence">
+      </div>
+      <div class="portfolio-info">
+        <div class="portfolio-name">Between Stone and Silence</div>
+        <div class="portfolio-medium">Watercolor on Cold Press · 18 × 24 in</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="shop">
+  <div class="shop-header">
+    <p class="section-label">Available Works</p>
+    <h2 class="section-title">Shop Originals</h2>
+  </div>
+  <div class="shop-grid" id="shopGrid"></div>
+</section>
+
+<section id="contact">
+  <div class="contact-inner">
+    <p class="section-label" style="text-align:center">Get in Touch</p>
+    <h2 class="section-title" style="text-align:center">Say Hello</h2>
+    <div class="divider"></div>
+    <form id="contactForm" action="https://formspree.io/f/mzdjadro" method="POST">
+      <div class="contact-grid">
+        <div class="form-group"><label>Name</label><input type="text" name="name" placeholder="Your name" required></div>
+        <div class="form-group"><label>Email</label><input type="email" name="email" placeholder="your@email.com" required></div>
+        <div class="form-group full"><label>Subject</label><input type="text" name="subject" placeholder="Commission, enquiry, or just hello…"></div>
+        <div class="form-group full"><label>Message</label><textarea rows="5" name="message" placeholder="Write your message here…" required></textarea></div>
+      </div>
+      <button type="button" class="btn-submit" onclick="submitForm()">Send Message</button>
+    </form>
+    <div class="form-success" id="formSuccess">Thank you — I'll be in touch soon. ✦</div>
+  </div>
+</section>
+
+<footer>© 2026 <span>Danjue Li</span> · All artworks are original, one-of-a-kind pieces · Bay Area, CA</footer>
+
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head"><h3>Your Bag</h3><button class="cart-close" onclick="toggleCart()">✕</button></div>
+  <div class="cart-items" id="cartItems"><p class="cart-empty">Your bag is empty.</p></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total"><span>Total</span><span id="cartTotal">$0</span></div>
+    <button class="btn-checkout" onclick="handleCheckout()">Proceed to Checkout</button>
+  </div>
+</div>
+
+<script>
+const products = [
+  { id:1, name:"Whisper of the Wind",       medium:"Watercolor",              size:"22 × 22 in", price:1500, img:"https://res.cloudinary.com/dla5agh4s/image/upload/w_800,q_auto/v1773532323/DSC_9760-5mb_1_tuwadf.jpg", stripeUrl:"https://buy.stripe.com/test_8x26oGdHM3wTeUT7e773G00", available:true },
+  { id:2, name:"Shades of Noon",            medium:"Watercolor on Cold Press", size:"18 × 24 in", price:1200, img:"https://res.cloudinary.com/dla5agh4s/image/upload/w_800,q_auto/v1773532323/DSC_9760-5mb_1_tuwadf.jpg", stripeUrl:"https://buy.stripe.com/test_dRm9ASfPUebxfYX9mf73G01", available:true },
+  { id:3, name:"Between Stone and Silence", medium:"Watercolor on Cold Press", size:"18 × 24 in", price:1500, img:"https://res.cloudinary.com/dla5agh4s/image/upload/w_800,q_auto/v1773532323/DSC_9760-5mb_1_tuwadf.jpg", stripeUrl:"https://buy.stripe.com/test_7sY8wOdHM3wT4gfcyr73G02", available:true },
+];
+
+let cart = [];
+
+function renderShop() {
+  document.getElementById('shopGrid').innerHTML = products.map(p => `
+    <div class="shop-card" id="card-${p.id}">
+      <div class="shop-img">
+        <img src="${p.img}" alt="${p.name}">
+        <span class="shop-badge">Original</span>
+      </div>
+      <div class="shop-title">${p.name}</div>
+      <div class="shop-meta">${p.medium} · ${p.size}</div>
+      <div class="shop-bottom">
+        <span class="shop-price">$${p.price.toLocaleString()}</span>
+        <button class="add-to-cart" id="btn-${p.id}" onclick="addToCart(${p.id})">Add to Bag</button>
+      </div>
+    </div>`).join('');
+}
+
+function addToCart(id) {
+  const p = products.find(x => x.id === id);
+  if (!p || cart.find(x => x.id === id)) return;
+  cart.push({...p});
+  const btn = document.getElementById(`btn-${id}`);
+  btn.textContent = 'Added ✓'; btn.classList.add('added');
+  updateCartUI(); toggleCart();
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(x => x.id !== id);
+  const btn = document.getElementById(`btn-${id}`);
+  if (btn) { btn.textContent = 'Add to Bag'; btn.classList.remove('added'); }
+  updateCartUI();
+}
+
+function updateCartUI() {
+  document.getElementById('cartCount').textContent = cart.length;
+  const el = document.getElementById('cartItems');
+  const footer = document.getElementById('cartFooter');
+  if (!cart.length) { el.innerHTML = '<p class="cart-empty">Your bag is empty.</p>'; footer.style.display='none'; return; }
+  el.innerHTML = cart.map(p => `
+    <div class="cart-item">
+      <div class="cart-item-img"><img src="${p.img}" alt="${p.name}"></div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${p.name}</div>
+        <div class="cart-item-price">$${p.price.toLocaleString()} · ${p.size}</div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart(${p.id})">Remove</button>
+    </div>`).join('');
+  document.getElementById('cartTotal').textContent = `$${cart.reduce((s,p)=>s+p.price,0).toLocaleString()}`;
+  footer.style.display = 'block';
+}
+
+function toggleCart() {
+  document.getElementById('cartDrawer').classList.toggle('open');
+  document.getElementById('cartOverlay').classList.toggle('open');
+}
+
+function handleCheckout() {
+  if (!cart.length) return;
+  const item = cart.find(p => p.stripeUrl);
+  if (item) window.location.href = item.stripeUrl;
+}
+
+function submitForm() {
+  const form = document.getElementById('contactForm');
+  fetch('https://formspree.io/f/mzdjadro', {
+    method: 'POST',
+    body: new FormData(form),
+    headers: { 'Accept': 'application/json' }
+  }).then(res => {
+    if (res.ok) {
+      form.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    } else {
+      alert('Oops! Something went wrong. Please try again.');
+    }
+  }).catch(() => alert('Oops! Something went wrong. Please try again.'));
+}
+
+function goTo(id) { document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
+
+renderShop();
+</script>
+</body>
+</html>
